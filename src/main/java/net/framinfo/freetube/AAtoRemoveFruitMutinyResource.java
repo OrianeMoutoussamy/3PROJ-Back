@@ -1,32 +1,22 @@
 package net.framinfo.freetube;
 
-import static jakarta.ws.rs.core.Response.Status.CREATED;
-import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
-import static jakarta.ws.rs.core.Response.Status.NO_CONTENT;
+import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
+import net.framinfo.freetube.models.Fruit;
+import org.hibernate.reactive.mutiny.Mutiny.SessionFactory;
 
 import java.util.List;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response;
-
-import io.smallrye.mutiny.Uni;
-import net.framinfo.freetube.models.Fruit;
-import org.hibernate.reactive.mutiny.Mutiny.SessionFactory;
+import static jakarta.ws.rs.core.Response.Status.*;
 
 @Path("fruits")
 @ApplicationScoped
 @Produces("application/json")
 @Consumes("application/json")
-public class FruitMutinyResource {
+public class AAtoRemoveFruitMutinyResource {
 
     @Inject
     SessionFactory sf;

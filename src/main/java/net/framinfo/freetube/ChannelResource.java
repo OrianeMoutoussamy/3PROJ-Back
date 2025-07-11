@@ -30,4 +30,6 @@ public class ChannelResource {
     public Uni<Response> getSubscribedChannels() {
         return Uni.createFrom().item(Response.status(200).build());
     }
+
+    // TODO: Add suscribe and unsubscribe methods
 }

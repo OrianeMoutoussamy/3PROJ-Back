@@ -1,4 +1,4 @@
-package net.framinfo.freetube.models;
+package net.framinfo.freetube.models.utils;
 
 import lombok.Getter;
 import lombok.Setter;

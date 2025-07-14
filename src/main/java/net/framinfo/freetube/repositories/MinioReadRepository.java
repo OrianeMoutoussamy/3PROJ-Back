@@ -3,7 +3,7 @@ package net.framinfo.freetube.repositories;
 import io.minio.GetObjectArgs;
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.extern.slf4j.Slf4j;
-import net.framinfo.freetube.models.MinioFilename;
+import net.framinfo.freetube.models.utils.MinioFilename;
 
 import java.io.InputStream;
 

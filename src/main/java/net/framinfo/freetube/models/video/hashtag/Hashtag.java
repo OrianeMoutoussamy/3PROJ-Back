@@ -1,4 +1,4 @@
-package net.framinfo.freetube.models.auth;
+package net.framinfo.freetube.models.video.hashtag;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,17 +12,14 @@ import java.io.Serializable;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "hashtag")
+public class Hashtag implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(length = 64, unique = true)
-    private String email;
-
-    @Column(length = 256, unique = true)
-    private String password;
+    @Column(length = 32, unique = true)
+    private String name;
 }

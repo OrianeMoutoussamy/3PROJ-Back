@@ -38,6 +38,9 @@ public class Video implements Serializable {
     @Column(length = 256)
     private String description;
 
+    @Column
+    private Float duration;
+
     @Column(name = "is_public")
     private boolean isPublic;
 

@@ -6,7 +6,10 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import net.framinfo.freetube.models.channel.Channel;
 import org.jboss.resteasy.reactive.RestPath;
+
+import java.util.List;
 
 /**
  * Handles channel-related queries
@@ -18,25 +21,25 @@ import org.jboss.resteasy.reactive.RestPath;
 public class ChannelResource {
 
     @GET
-    public Uni<Response> getSelf() {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Channel> getSelf() {
+        return Uni.createFrom().item(new Channel());
     }
 
     @GET
     @Path("/{id}")
-    public Uni<Response> getById(@RestPath String id) {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Channel> getById(@RestPath String id) {
+        return Uni.createFrom().item(new Channel());
     }
 
     @GET
     @Path("/subscribed")
-    public Uni<Response> getSubscribedChannels() {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<List<Channel>> getSubscribedChannels() {
+        return Uni.createFrom().item(List.of());
     }
 
     @PUT
-    public Uni<Response> updateChannel(String body) {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Channel> updateChannel(String body) {
+        return Uni.createFrom().item(new Channel());
     }
 
     @DELETE

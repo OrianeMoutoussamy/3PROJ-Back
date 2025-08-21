@@ -6,7 +6,10 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import net.framinfo.freetube.models.playlist.Playlist;
 import org.jboss.resteasy.reactive.RestPath;
+
+import java.util.List;
 
 /**
  * Handles playlist-related queries
@@ -19,25 +22,25 @@ import org.jboss.resteasy.reactive.RestPath;
 public class PlaylistResource {
 
     @GET
-    public Uni<Response> getSelfPlaylists() {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<List<Playlist>> getSelfPlaylists() {
+        return Uni.createFrom().item(List.of());
     }
 
     @GET
     @Path("/{id}")
-    public Uni<Response> getPlaylistById(@RestPath String id) {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Playlist> getPlaylistById(@RestPath String id) {
+        return Uni.createFrom().item(new Playlist());
     }
 
     @POST
-    public Uni<Response> createPlaylist(String body) {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Playlist> createPlaylist(String body) {
+        return Uni.createFrom().item(new Playlist());
     }
 
     @PUT
     @Path("/{id}")
-    public Uni<Response> updatePlaylist(@RestPath String id, String body) {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Playlist> updatePlaylist(@RestPath String id, String body) {
+        return Uni.createFrom().item(new Playlist());
     }
 
     @PUT

@@ -6,6 +6,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import net.framinfo.freetube.models.video.Video;
 import org.jboss.resteasy.reactive.RestPath;
 
 /**
@@ -20,8 +21,8 @@ public class VideoResource {
 
     @GET
     @Path("/{id}")
-    public Uni<Response> getVideoById(@RestPath String id) {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Video> getVideoById(@RestPath String id) {
+        return Uni.createFrom().item(new Video());
     }
 
     @POST
@@ -31,8 +32,8 @@ public class VideoResource {
 
     @PUT
     @Path("/{id}")
-    public Uni<Response> updateVideo(@RestPath String id) {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Video> updateVideo(@RestPath String id) {
+        return Uni.createFrom().item(new Video());
     }
 
     @DELETE

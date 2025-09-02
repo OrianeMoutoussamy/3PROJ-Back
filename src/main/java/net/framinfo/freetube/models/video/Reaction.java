@@ -1,5 +1,6 @@
 package net.framinfo.freetube.models.video;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -17,12 +18,7 @@ import java.time.Instant;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "reaction")
-public class Reaction implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Long id;
+public class Reaction extends PanacheEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "channel_id")

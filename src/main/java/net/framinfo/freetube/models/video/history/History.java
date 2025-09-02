@@ -1,5 +1,6 @@
 package net.framinfo.freetube.models.video.history;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ import java.time.Instant;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "history")
-public class History implements Serializable {
+public class History extends PanacheEntityBase implements Serializable {
 
     @EmbeddedId
     private HistoryId id;

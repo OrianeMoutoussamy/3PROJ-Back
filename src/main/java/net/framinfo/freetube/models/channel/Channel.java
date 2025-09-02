@@ -1,5 +1,6 @@
 package net.framinfo.freetube.models.channel;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,7 @@ import java.time.Instant;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "channel")
-public class Channel implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Long id;
+public class Channel extends PanacheEntity implements Serializable {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

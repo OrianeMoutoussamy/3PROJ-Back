@@ -1,5 +1,6 @@
 package net.framinfo.freetube.models.channel;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "subscription")
-public class Subscription implements Serializable {
+public class Subscription extends PanacheEntityBase implements Serializable {
 
     @EmbeddedId
     private SubscriptionId id;

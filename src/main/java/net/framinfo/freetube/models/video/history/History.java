@@ -1,6 +1,6 @@
 package net.framinfo.freetube.models.video.history;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +27,11 @@ public class History extends PanacheEntityBase implements Serializable {
     @CreationTimestamp
     private Instant seenAt;
 
-    @JoinColumn(name = "channel_id")
+    @JoinColumn(name = "channel_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Channel channel;
 
-    @JoinColumn(name = "video_id")
+    @JoinColumn(name = "video_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Video video;
 }

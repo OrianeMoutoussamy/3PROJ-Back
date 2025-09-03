@@ -1,6 +1,6 @@
 package net.framinfo.freetube.models.channel;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +22,14 @@ public class Subscription extends PanacheEntityBase implements Serializable {
     /**
      * User subscribing to a channel
      */
-    @JoinColumn(name = "subscriber_id")
+    @JoinColumn(name = "subscriber_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Channel subscriber;
 
     /**
      * Channel which user is subscribing to
      */
-    @JoinColumn(name = "channel_id")
+    @JoinColumn(name = "channel_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Channel channel;
 }

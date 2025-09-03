@@ -1,6 +1,6 @@
 package net.framinfo.freetube.models.auth;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +13,8 @@ import java.io.Serializable;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "user")
-public class User extends PanacheEntity implements Serializable {
+@Table(name = "ftuser")
+public class User extends PanacheEntityBase implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

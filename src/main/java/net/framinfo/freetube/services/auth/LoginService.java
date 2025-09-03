@@ -12,7 +12,7 @@ import jakarta.ws.rs.core.Response;
 public class LoginService {
 
     public Uni<Response> run(User user) {
-        return Uni.createFrom().item(User.find("email = ?1 and password = ?2", user.getEmail(), user.getPassword()))
+        return User.find("email = ?1 and password = ?2", user.getEmail(), user.getPassword()).firstResult()
                 .onItem().ifNull().failWith(NotFoundException::new)
                 .onItem().ifNotNull().transform(it -> Response.status(200).entity(new JWT()).build()); //TODO generate JWT
     }

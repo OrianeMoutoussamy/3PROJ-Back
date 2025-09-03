@@ -1,6 +1,6 @@
 package net.framinfo.freetube.models.playlist;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +26,11 @@ public class PlaylistVideo extends PanacheEntityBase implements Serializable {
     @CreationTimestamp
     private Instant addedAt;
 
-    @JoinColumn(name = "playlist_id")
+    @JoinColumn(name = "playlist_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Playlist playlist;
 
-    @JoinColumn(name = "video_id")
+    @JoinColumn(name = "video_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Video video;
 }

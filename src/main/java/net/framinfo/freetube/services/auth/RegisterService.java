@@ -12,16 +12,17 @@ import net.framinfo.freetube.models.channel.Channel;
 public class RegisterService {
 
     public Uni<Response> run(User user) {
-        return Uni.createFrom().item(User.find("email = ?1", user.getEmail()).count() == 0 ? user : null)
-                .onItem().ifNull().failWith(InternalServerErrorException::new)
-                .onItem().ifNotNull().transform(it -> {
+        return User.find("email = ?1", user.getEmail()).firstResult()
+                .onItem().ifNotNull().failWith(InternalServerErrorException::new)
+                .onItem().ifNull().continueWith(user)
+                .onItem().ifNotNull().transformToUni(it -> user.persist())
+                .onItem().ifNotNull().transformToUni(it -> {
                     Channel channel = new Channel();
-                    channel.setUser(it);
-                    channel.setUsername(it.getEmail());
+                    channel.setUser(user);
+                    channel.setUsername(user.getEmail());
                     channel.setDescription("Welcome to Freetube !");
-                    it.persist();
-                    channel.persist();
-                    return Response.status(200).build();
-                });
+                    return channel.persist();
+                })
+                .onItem().ifNotNull().transform(it -> Response.status(200).build());
     }
 }

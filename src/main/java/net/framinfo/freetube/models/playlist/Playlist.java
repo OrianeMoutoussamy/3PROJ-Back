@@ -1,6 +1,6 @@
 package net.framinfo.freetube.models.playlist;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,12 @@ import java.time.Instant;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "playlist")
-public class Playlist extends PanacheEntity implements Serializable {
+public class Playlist extends PanacheEntityBase implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "channel_id")

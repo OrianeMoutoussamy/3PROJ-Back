@@ -1,6 +1,6 @@
 package net.framinfo.freetube.models.video.hashtag;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +20,11 @@ public class VideoHashtag extends PanacheEntityBase implements Serializable {
     @EmbeddedId
     private VideoHashtagId id;
 
-    @JoinColumn(name = "hashtag_id")
+    @JoinColumn(name = "hashtag_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Hashtag hashtag;
 
-    @JoinColumn(name = "video_id")
+    @JoinColumn(name = "video_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Video video;
 }

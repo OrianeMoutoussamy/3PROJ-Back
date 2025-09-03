@@ -21,7 +21,7 @@ import java.util.List;
 public class ChannelResource {
 
     @GET
-    public Uni<Channel> getSelf() {
+    public Uni<Channel> getSelf(@HeaderParam("email") String email) {
         return Uni.createFrom().item(new Channel());
     }
 

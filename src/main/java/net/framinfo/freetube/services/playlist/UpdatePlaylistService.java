@@ -19,7 +19,7 @@ public class UpdatePlaylistService {
                 .map(it -> it.getId().equals(playlist.getChannelId()) ? playlist : null)
                 .onItem().ifNull().failWith(ForbiddenException::new)
                 .onItem().ifNotNull().transformToUni(it -> {
-                    it.setId(Long.getLong(id));
+                    it.setId(Long.parseLong(id));
                     return it.persist();
                 });
     }

@@ -1,5 +1,6 @@
 package net.framinfo.freetube.delegates;
 
+import io.quarkus.security.UnauthorizedException;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.InternalServerErrorException;
@@ -15,15 +16,15 @@ public class SessionDelegate {
 
     public Uni<User> getUserFromToken(String token) {
         return Session.find("token = ?1", token).firstResult()
-                .onItem().ifNull().failWith(InternalServerErrorException::new)
+                .onItem().ifNull().failWith(UnauthorizedException::new)
                 .flatMap(it -> isSessionValid((Session) it))
-                .onItem().ifNull().failWith(InternalServerErrorException::new)
+                .onItem().ifNull().failWith(UnauthorizedException::new)
                 .onItem().ifNotNull().transform(Session::getUser);
     }
 
     public Uni<Channel> getChannelFromToken(String token) {
         return getUserFromToken(token)
-                .onItem().ifNotNull().transformToUni(it -> Channel.find("user_id = ?1", it.getId()).firstResult());
+                .onItem().ifNotNull().transformToUni(it -> Channel.find("userId = ?1", it.getId()).firstResult());
     }
 
     public Uni<Session> isSessionValid(Session session) {

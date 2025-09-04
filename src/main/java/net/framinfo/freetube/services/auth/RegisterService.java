@@ -29,6 +29,6 @@ public class RegisterService {
                     return channel.persist();
                 })
                 .onItem().ifNotNull().transformToUni(ignored -> sessionDelegate.createSession(user))
-                .onItem().ifNotNull().transform(ignored -> Response.status(200).build());
+                .onItem().ifNotNull().transform(it -> Response.status(200).entity(it.getToken()).build());
     }
 }

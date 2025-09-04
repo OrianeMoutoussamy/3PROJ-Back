@@ -15,21 +15,21 @@ public class SubscriptionService {
     SessionDelegate sessionDelegate;
 
     public Uni<Response> subscribe(String token, String channelId) {
-        return sessionDelegate.getUserFromToken(token)
+        return sessionDelegate.getChannelFromToken(token)
                 .flatMap(it -> {
                     SubscriptionId subscriptionId = new SubscriptionId();
-                    subscriptionId.setChannelId(Long.getLong(channelId));
+                    subscriptionId.setChannelId(Long.parseLong(channelId));
                     subscriptionId.setSubscriberId(it.getId());
                     Subscription subscription = new Subscription();
                     subscription.setId(subscriptionId);
-                    return subscription.persist();
+                    return subscription.persistAndFlush();
                 })
                 .onItem().ifNotNull().transform(it -> Response.status(200).build());
     }
 
     public Uni<Response> unsubscribe(String token, String channelId) {
-        return sessionDelegate.getUserFromToken(token)
-                .flatMap(it -> Subscription.delete("channel_id = ?1 and subscriber_id = ?2", channelId, it.getId()))
+        return sessionDelegate.getChannelFromToken(token)
+                .flatMap(it -> Subscription.delete("id = ?1", new SubscriptionId(it.getId(), Long.parseLong(channelId))))
                 .onItem().ifNotNull().transform(it -> Response.status(200).build());
     }
 }

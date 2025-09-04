@@ -18,18 +18,4 @@ public class Subscription extends PanacheEntityBase implements Serializable {
 
     @EmbeddedId
     private SubscriptionId id;
-
-    /**
-     * User subscribing to a channel
-     */
-    @JoinColumn(name = "subscriber_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Channel subscriber;
-
-    /**
-     * Channel which user is subscribing to
-     */
-    @JoinColumn(name = "channel_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Channel channel;
 }

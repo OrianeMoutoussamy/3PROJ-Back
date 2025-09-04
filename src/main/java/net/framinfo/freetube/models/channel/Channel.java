@@ -12,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 @Getter @Setter
 @ToString
@@ -49,4 +50,32 @@ public class Channel extends PanacheEntityBase implements Serializable {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Instant updatedAt;
+
+    @JoinTable(
+            name = "subscription",
+            joinColumns = @JoinColumn(
+                    name = "subscriber_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "channel_id",
+                    referencedColumnName = "id"
+            )
+    )
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Channel> subscriptions;
+
+    @JoinTable(
+            name = "subscription",
+            joinColumns = @JoinColumn(
+                    name = "channel_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "subscriber_id",
+                    referencedColumnName = "id"
+            )
+    )
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Channel> subscribers;
 }

@@ -1,0 +1,35 @@
+package net.framinfo.freetube.services.channel;
+
+import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Response;
+import net.framinfo.freetube.delegates.SessionDelegate;
+import net.framinfo.freetube.models.channel.Subscription;
+import net.framinfo.freetube.models.channel.SubscriptionId;
+
+@ApplicationScoped
+public class SubscriptionService {
+
+    @Inject
+    SessionDelegate sessionDelegate;
+
+    public Uni<Response> subscribe(String token, String channelId) {
+        return sessionDelegate.getUserFromToken(token)
+                .flatMap(it -> {
+                    SubscriptionId subscriptionId = new SubscriptionId();
+                    subscriptionId.setChannelId(Long.getLong(channelId));
+                    subscriptionId.setSubscriberId(it.getId());
+                    Subscription subscription = new Subscription();
+                    subscription.setId(subscriptionId);
+                    return subscription.persist();
+                })
+                .onItem().ifNotNull().transform(it -> Response.status(200).build());
+    }
+
+    public Uni<Response> unsubscribe(String token, String channelId) {
+        return sessionDelegate.getUserFromToken(token)
+                .flatMap(it -> Subscription.delete("channel_id = ?1 and subscriber_id = ?2", channelId, it.getId()))
+                .onItem().ifNotNull().transform(it -> Response.status(200).build());
+    }
+}

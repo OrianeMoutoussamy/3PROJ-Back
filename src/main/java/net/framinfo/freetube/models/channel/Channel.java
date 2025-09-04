@@ -25,8 +25,8 @@ public class Channel extends PanacheEntityBase implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(insertable=false, updatable=false)
-    private int user_id;
+    @Column(name = "user_id", insertable=false, updatable=false)
+    private Long userId;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

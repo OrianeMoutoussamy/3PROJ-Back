@@ -8,7 +8,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import net.framinfo.freetube.models.channel.Channel;
+import net.framinfo.freetube.services.channel.DeleteChannelService;
 import net.framinfo.freetube.services.channel.GetChannelService;
+import net.framinfo.freetube.services.channel.SubscriptionService;
+import net.framinfo.freetube.services.channel.UpdateChannelService;
 import org.jboss.resteasy.reactive.RestPath;
 
 import java.util.List;
@@ -25,6 +28,15 @@ public class ChannelResource {
     @Inject
     GetChannelService getChannelService;
 
+    @Inject
+    UpdateChannelService updateChannelService;
+
+    @Inject
+    DeleteChannelService deleteChannelService;
+
+    @Inject
+    SubscriptionService subscriptionService;
+
     @GET
     public Uni<Channel> getSelf(@HeaderParam("Token") String token) {
         return getChannelService.runSelf(token);
@@ -33,34 +45,34 @@ public class ChannelResource {
     @GET
     @Path("/{id}")
     public Uni<Channel> getById(@RestPath String id) {
-        return Uni.createFrom().item(new Channel());
+        return getChannelService.run(id);
     }
 
     @GET
     @Path("/subscribed")
-    public Uni<List<Channel>> getSubscribedChannels() {
-        return Uni.createFrom().item(List.of());
+    public Uni<List<Channel>> getSubscribedChannels(@HeaderParam("Token") String token) {
+        return getChannelService.getSubscriptions(token);
     }
 
     @PUT
-    public Uni<Channel> updateChannel(String body) {
-        return Uni.createFrom().item(new Channel());
+    public Uni<Channel> updateChannel(@HeaderParam("Token") String token, Channel channel) {
+        return updateChannelService.run(token, channel);
     }
 
     @DELETE
-    public Uni<Response> deleteChannel() {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Response> deleteChannel(@HeaderParam("Token") String token) {
+        return deleteChannelService.run(token);
     }
 
     @POST
     @Path("/s/{id}")
-    public Uni<Response> subscribe(@RestPath String id) {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Response> subscribe(@HeaderParam("Token") String token, @RestPath String id) {
+        return subscriptionService.subscribe(token, id);
     }
 
     @DELETE
     @Path("/u/{id}")
-    public Uni<Response> unsubscribe(@RestPath String id) {
-        return Uni.createFrom().item(Response.status(200).build());
+    public Uni<Response> unsubscribe(@HeaderParam("Token") String token, @RestPath String id) {
+        return subscriptionService.unsubscribe(token, id);
     }
 }

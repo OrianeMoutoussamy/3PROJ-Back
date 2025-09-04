@@ -2,11 +2,13 @@ package net.framinfo.freetube;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import net.framinfo.freetube.models.channel.Channel;
+import net.framinfo.freetube.services.channel.GetChannelService;
 import org.jboss.resteasy.reactive.RestPath;
 
 import java.util.List;
@@ -20,9 +22,12 @@ import java.util.List;
 @ApplicationScoped
 public class ChannelResource {
 
+    @Inject
+    GetChannelService getChannelService;
+
     @GET
-    public Uni<Channel> getSelf(@HeaderParam("email") String email) {
-        return Uni.createFrom().item(new Channel());
+    public Uni<Channel> getSelf(@HeaderParam("Token") String token) {
+        return getChannelService.runSelf(token);
     }
 
     @GET

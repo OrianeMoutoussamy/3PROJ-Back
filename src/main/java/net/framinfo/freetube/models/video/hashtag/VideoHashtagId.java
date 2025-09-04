@@ -8,9 +8,9 @@ import java.io.Serializable;
 @Embeddable
 public class VideoHashtagId implements Serializable {
 
-    @Column(name = "hashtag_id")
+    @Column(name = "hashtag_id", insertable=false, updatable=false)
     private long hashtagId;
 
-    @Column(name = "video_id")
+    @Column(name = "video_id", insertable=false, updatable=false)
     private long videoId;
 }

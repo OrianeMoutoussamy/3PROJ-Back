@@ -20,6 +20,13 @@ import java.util.UUID;
 public class Session extends PanacheEntityBase implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
+
+    @Column(insertable=false, updatable=false)
+    private int user_id;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;

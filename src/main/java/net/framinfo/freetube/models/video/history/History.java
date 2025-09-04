@@ -27,11 +27,11 @@ public class History extends PanacheEntityBase implements Serializable {
     @CreationTimestamp
     private Instant seenAt;
 
-    @JoinColumn(name = "channel_id", insertable = false, updatable = false)
+    @JoinColumn(name = "channel_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private Channel channel;
 
-    @JoinColumn(name = "video_id", insertable = false, updatable = false)
+    @JoinColumn(name = "video_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private Video video;
 }

@@ -8,9 +8,9 @@ import java.io.Serializable;
 @Embeddable
 public class SubscriptionId implements Serializable {
 
-    @Column(name = "subscriber_id")
+    @Column(name = "subscriber_id", insertable=false, updatable=false)
     private long subscriberId;
 
-    @Column(name = "channel_id")
+    @Column(name = "channel_id", insertable=false, updatable=false)
     private long channelId;
 }

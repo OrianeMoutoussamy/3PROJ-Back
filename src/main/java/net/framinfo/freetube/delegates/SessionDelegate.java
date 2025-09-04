@@ -6,6 +6,7 @@ import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.NotFoundException;
 import net.framinfo.freetube.models.auth.Session;
 import net.framinfo.freetube.models.auth.User;
+import net.framinfo.freetube.models.channel.Channel;
 
 import java.time.Instant;
 
@@ -18,7 +19,11 @@ public class SessionDelegate {
                 .flatMap(it -> isSessionValid((Session) it))
                 .onItem().ifNull().failWith(InternalServerErrorException::new)
                 .onItem().ifNotNull().transform(Session::getUser);
+    }
 
+    public Uni<Channel> getChannelFromToken(String token) {
+        return getUserFromToken(token)
+                .onItem().ifNotNull().transformToUni(it -> Channel.find("user_id = ?1", it.getId()).firstResult());
     }
 
     public Uni<Session> isSessionValid(Session session) {

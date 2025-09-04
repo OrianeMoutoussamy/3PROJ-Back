@@ -29,6 +29,9 @@ public class Playlist extends PanacheEntityBase implements Serializable {
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
+    @Column(name = "channel_id", insertable=false, updatable=false)
+    private Long channelId;
+
     @Column(length = 64)
     private String name;
 

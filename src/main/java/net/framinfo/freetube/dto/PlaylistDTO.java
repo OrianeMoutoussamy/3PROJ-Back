@@ -21,7 +21,7 @@ public class PlaylistDTO {
 
     private Instant updatedAt;
 
-    private List<Video> videos;
+    private List<Video> videos; //TODO change to VideoDTO
 
     public PlaylistDTO(Playlist playlist) {
         this.id = playlist.getId();

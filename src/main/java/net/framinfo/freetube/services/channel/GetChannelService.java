@@ -17,7 +17,7 @@ public class GetChannelService {
     @Inject
     SessionDelegate sessionDelegate;
 
-    public Uni<SelfChannelDTO> runSelf(String token) {
+    public Uni<SelfChannelDTO> runSelf(String token) { //TODO add history to this and DTO
         return sessionDelegate.getChannelFromToken(token)
                 .map(SelfChannelDTO::new);
     }

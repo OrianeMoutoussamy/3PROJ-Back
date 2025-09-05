@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter @Setter
 @RequiredArgsConstructor
-public class VideoDTO {
+public class SelfVideoDTO {
 
     private Long id;
 
@@ -25,7 +25,11 @@ public class VideoDTO {
 
     private Float duration;
 
+    private boolean isPublic;
+
     private Instant createdAt;
+
+    private Instant updatedAt;
 
     private List<Comment> comments;
 
@@ -33,7 +37,7 @@ public class VideoDTO {
 
     private Long dislikes;
 
-    public VideoDTO(Video video, Boolean subscribed) {
+    public SelfVideoDTO(Video video, Boolean subscribed) {
         this.id = video.getId();
         this.title = video.getTitle();
         this.description = video.getDescription();
@@ -41,6 +45,8 @@ public class VideoDTO {
         this.createdAt = video.getCreatedAt();
         this.comments = video.getComments();
         this.duration = video.getDuration();
+        this.isPublic = video.isPublic();
+        this.updatedAt = video.getUpdatedAt();
         this.channel = new ChannelDTO(video.getChannel(), subscribed);
         this.likes = video.getReactions().stream().filter(it -> it.getType().equals(1L)).count();
         this.dislikes = video.getReactions().stream().filter(it -> it.getType().equals(-1L)).count();

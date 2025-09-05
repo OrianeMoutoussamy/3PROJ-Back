@@ -13,6 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 @Getter @Setter
 @ToString
@@ -52,4 +53,12 @@ public class Video extends PanacheEntityBase implements Serializable {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Instant updatedAt;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "video_id")
+    private List<Comment> comments;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "video_id")
+    private List<Reaction> reactions;
 }

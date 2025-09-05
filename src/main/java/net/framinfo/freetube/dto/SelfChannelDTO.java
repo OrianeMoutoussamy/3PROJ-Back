@@ -12,6 +12,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SelfChannelDTO {
 
+    private Long id;
+
     private byte[] profilePicture;
 
     private String username;
@@ -27,6 +29,7 @@ public class SelfChannelDTO {
     private List<ChannelDTO> subscribers;
 
     public SelfChannelDTO(Channel channel) {
+        this.id = channel.getId();
         this.username = channel.getUsername();
         this.description = channel.getDescription();
         this.createdAt = channel.getCreatedAt();

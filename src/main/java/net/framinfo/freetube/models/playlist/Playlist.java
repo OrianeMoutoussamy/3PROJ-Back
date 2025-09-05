@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import net.framinfo.freetube.models.channel.Channel;
+import net.framinfo.freetube.models.video.Video;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 @Getter @Setter
 @ToString
@@ -42,4 +44,18 @@ public class Playlist extends PanacheEntityBase implements Serializable {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Instant updatedAt;
+
+    @JoinTable(
+            name = "playlist_video",
+            joinColumns = @JoinColumn(
+                    name = "playlist_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "video_id",
+                    referencedColumnName = "id"
+            )
+    )
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Video> videos;
 }

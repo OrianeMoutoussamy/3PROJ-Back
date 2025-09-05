@@ -17,9 +17,7 @@ public class SubscriptionService {
     public Uni<Response> subscribe(String token, String channelId) {
         return sessionDelegate.getChannelFromToken(token)
                 .flatMap(it -> {
-                    SubscriptionId subscriptionId = new SubscriptionId();
-                    subscriptionId.setChannelId(Long.parseLong(channelId));
-                    subscriptionId.setSubscriberId(it.getId());
+                    SubscriptionId subscriptionId = new SubscriptionId(it.getId(), Long.parseLong(channelId));
                     Subscription subscription = new Subscription();
                     subscription.setId(subscriptionId);
                     return subscription.persistAndFlush();

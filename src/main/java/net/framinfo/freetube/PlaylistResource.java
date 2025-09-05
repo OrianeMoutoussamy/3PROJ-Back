@@ -7,8 +7,10 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import net.framinfo.freetube.dto.PlaylistDTO;
 import net.framinfo.freetube.models.playlist.Playlist;
 import net.framinfo.freetube.services.playlist.CreatePlaylistService;
+import net.framinfo.freetube.services.playlist.DeletePlaylistService;
 import net.framinfo.freetube.services.playlist.GetPlaylistService;
 import net.framinfo.freetube.services.playlist.UpdatePlaylistService;
 import org.jboss.resteasy.reactive.RestPath;
@@ -34,43 +36,46 @@ public class PlaylistResource {
     @Inject
     UpdatePlaylistService updatePlaylistService;
 
+    @Inject
+    DeletePlaylistService deletePlaylistService;
+
     @GET
-    public Uni<List<Playlist>> getSelfPlaylists(@HeaderParam("Token") String token) {
+    public Uni<List<PlaylistDTO>> getSelfPlaylists(@HeaderParam("Token") String token) {
         return getPlaylistService.runSelf(token);
     }
 
     @GET
     @Path("/{id}")
-    public Uni<Playlist> getPlaylistById(@RestPath String id) {
+    public Uni<PlaylistDTO> getPlaylistById(@RestPath String id) {
         return getPlaylistService.run(id);
     }
 
     @POST
-    public Uni<Playlist> createPlaylist(@HeaderParam("Token") String token, Playlist playlist) {
+    public Uni<PlaylistDTO> createPlaylist(@HeaderParam("Token") String token, Playlist playlist) {
         return createPlaylistService.run(token, playlist);
     }
 
     @PUT
     @Path("/{id}")
-    public Uni<Playlist> updatePlaylist(@HeaderParam("Token") String token, @RestPath String id, Playlist playlist) {
+    public Uni<PlaylistDTO> updatePlaylist(@HeaderParam("Token") String token, @RestPath String id, Playlist playlist) {
         return updatePlaylistService.run(token, id, playlist);
     }
 
     @PUT
     @Path("/{id}/add/{vid}")
     public Uni<Response> addVideoToPlaylist(@HeaderParam("Token") String token, @RestPath String id, @RestPath String vid) {
-        return Uni.createFrom().item(Response.status(200).build());
+        return updatePlaylistService.addVideo(token, id, vid);
     }
 
     @PUT
     @Path("/{id}/del/{vid}")
     public Uni<Response> removeVideoFromPlaylist(@HeaderParam("Token") String token, @RestPath String id, @RestPath String vid) {
-        return Uni.createFrom().item(Response.status(200).build());
+        return updatePlaylistService.removeVideo(token, id, vid);
     }
 
     @DELETE
     @Path("/{id}")
     public Uni<Response> deletePlaylist(@HeaderParam("Token") String token, @RestPath String id) {
-        return Uni.createFrom().item(Response.status(200).build());
+        return deletePlaylistService.run(token, id);
     }
 }

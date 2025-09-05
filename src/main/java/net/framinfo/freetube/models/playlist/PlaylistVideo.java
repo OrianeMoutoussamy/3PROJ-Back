@@ -25,12 +25,4 @@ public class PlaylistVideo extends PanacheEntityBase implements Serializable {
     @Column(name = "added_at", nullable = false)
     @CreationTimestamp
     private Instant addedAt;
-
-    @JoinColumn(name = "playlist_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Playlist playlist;
-
-    @JoinColumn(name = "video_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Video video;
 }

@@ -28,9 +28,15 @@ public class Reaction extends PanacheEntityBase implements Serializable {
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
+    @Column(name = "channel_id", insertable=false, updatable=false)
+    private Long channelId;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "video_id")
     private Video video;
+
+    @Column(name = "video_id", insertable=false, updatable=false)
+    private Long videoId;
 
     /**
      * Should always be 1 (like) or -1 (dislike)
@@ -41,4 +47,10 @@ public class Reaction extends PanacheEntityBase implements Serializable {
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Instant createdAt;
+
+    public Reaction(Long channelId, Long videoId, Long type) {
+        this.channelId = channelId;
+        this.videoId = videoId;
+        this.type = type;
+    }
 }

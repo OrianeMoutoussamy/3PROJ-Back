@@ -29,9 +29,15 @@ public class Comment extends PanacheEntityBase implements Serializable {
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
+    @Column(name = "channel_id", insertable=false, updatable=false)
+    private Long channelId;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "video_id")
     private Video video;
+
+    @Column(name = "video_id", insertable=false, updatable=false)
+    private Long videoId;
 
     @Column(length = 256)
     private String content;
@@ -39,4 +45,10 @@ public class Comment extends PanacheEntityBase implements Serializable {
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Instant createdAt;
+
+    public Comment(Long channelId, Long videoId, String content) {
+        this.channelId = channelId;
+        this.videoId = videoId;
+        this.content = content;
+    }
 }

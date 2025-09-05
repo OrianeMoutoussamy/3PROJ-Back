@@ -1,37 +1,14 @@
-package net.framinfo.freetube.dto;
+package net.framinfo.freetube.dto.video;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import net.framinfo.freetube.models.video.Comment;
+import net.framinfo.freetube.dto.channel.ChannelDTO;
 import net.framinfo.freetube.models.video.Video;
-
-import java.time.Instant;
-import java.util.List;
 
 @Getter @Setter
 @RequiredArgsConstructor
-public class VideoDTO {
-
-    private Long id;
-
-    private ChannelDTO channel;
-
-    private byte[] thumbnail;
-
-    private String title;
-
-    private String description;
-
-    private Float duration;
-
-    private Instant createdAt;
-
-    private List<Comment> comments;
-
-    private Long likes;
-
-    private Long dislikes;
+public class VideoDTO extends AbstractVideoDTO {
 
     public VideoDTO(Video video, Boolean subscribed) {
         this.id = video.getId();

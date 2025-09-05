@@ -1,4 +1,4 @@
-package net.framinfo.freetube.dto;
+package net.framinfo.freetube.dto.channel;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

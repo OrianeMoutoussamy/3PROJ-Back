@@ -2,17 +2,12 @@ package net.framinfo.freetube.services.channel;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
-import net.framinfo.freetube.delegates.SessionDelegate;
 import net.framinfo.freetube.models.channel.Subscription;
 import net.framinfo.freetube.models.channel.SubscriptionId;
 
 @ApplicationScoped
-public class SubscriptionService {
-
-    @Inject
-    SessionDelegate sessionDelegate;
+public class SubscriptionService extends AbstractChannelService{
 
     public Uni<Response> subscribe(String token, String channelId) {
         return sessionDelegate.getChannelFromToken(token)

@@ -1,4 +1,7 @@
 package net.framinfo.freetube.services.video;
 
-public class UploadVideoService {
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+public class UploadVideoService extends AbstractVideoService {
 }

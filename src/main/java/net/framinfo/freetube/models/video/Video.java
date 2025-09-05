@@ -27,6 +27,9 @@ public class Video extends PanacheEntityBase implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
+    @Column(name = "channel_id", insertable=false, updatable=false)
+    private Long channelId;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "channel_id")
     private Channel channel;

@@ -2,20 +2,15 @@ package net.framinfo.freetube.services.channel;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import net.framinfo.freetube.delegates.SessionDelegate;
-import net.framinfo.freetube.dto.ChannelDTO;
-import net.framinfo.freetube.dto.SelfChannelDTO;
+import net.framinfo.freetube.dto.channel.ChannelDTO;
+import net.framinfo.freetube.dto.channel.SelfChannelDTO;
 import net.framinfo.freetube.models.channel.Channel;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @ApplicationScoped
-public class GetChannelService {
-
-    @Inject
-    SessionDelegate sessionDelegate;
+public class GetChannelService extends AbstractChannelService{
 
     public Uni<SelfChannelDTO> runSelf(String token) { //TODO add history to this and DTO
         return sessionDelegate.getChannelFromToken(token)

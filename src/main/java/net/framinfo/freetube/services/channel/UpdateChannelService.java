@@ -16,7 +16,7 @@ public class UpdateChannelService extends AbstractChannelService{
         return sessionDelegate.getUserFromToken(token)
                 .flatMap(it -> {
                     userId.set(it.getId());
-                    return this.checkOwnership(token, channel.getId().toString());
+                    return this.checkOwnership(token, channel.getId());
                 })
                 .map(it -> it.getId().equals(channel.getUserId()) ? channel : null)
                 .onItem().ifNull().failWith(ForbiddenException::new)

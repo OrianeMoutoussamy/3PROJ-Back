@@ -28,7 +28,7 @@ public class SelfChannelDTO extends AbstractChannelDTO {
         this.createdAt = channel.getCreatedAt();
         this.updatedAt = channel.getUpdatedAt();
         this.subscriptions = channel.getSubscriptions().stream().map(it -> new ChannelDTO(it, true)).toList();
-        this.subscribers = channel.getSubscribers().stream().map(it -> new ChannelDTO(it, this.subscriptions.stream().anyMatch(ti -> ti.getUsername().equals(it.getUsername())))).toList();
-        this.history = channel.getHistory().stream().map(it -> new VideoDTO(it, false)).toList();
+        this.subscribers = channel.getSubscribers().stream().map(it -> new ChannelDTO(it, this.subscriptions.stream().anyMatch(ti -> ti.getId().equals(it.getId())))).toList();
+        this.history = channel.getHistory().stream().map(it -> new VideoDTO(it, this.subscriptions.stream().anyMatch(ti -> ti.getId().equals(it.getChannelId())))).toList();
     }
 }

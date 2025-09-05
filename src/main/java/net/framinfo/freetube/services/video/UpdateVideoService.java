@@ -9,7 +9,7 @@ import net.framinfo.freetube.models.video.Video;
 public class UpdateVideoService extends AbstractVideoService {
 
     public Uni<SelfVideoDTO> run(String token, String id, Video video) {
-        return this.checkOwnership(token, id)
+        return this.checkOwnership(token, Long.parseLong(id))
                 .onItem().ifNotNull().transformToUni(ignored -> { //TODO adapt to payload -> pbly not video received in payload but DTO..
                     video.setId(Long.parseLong(id));
                     return video.persist();

@@ -14,7 +14,8 @@ public class DeleteChannelService extends AbstractChannelService {
         return sessionDelegate.getUserFromToken(token)
                 .flatMap(it -> Channel.find("userId = ?1", it.getId()).firstResult())
                 .onItem().ifNull().failWith(NotFoundException::new)
-                .onItem().ifNotNull().transformToUni(it -> ((Channel) it).delete())
-                .onItem().ifNotNull().transform(ignored -> Response.status(200).build());
+                .onItem().ifNotNull().transform(it -> (Channel) it)
+                .onItem().ifNotNull().transformToUni(it -> Uni.join().all(it.delete(), it.flush()).andCollectFailures())
+                .map(ignored -> Response.status(200).build());
     }
 }

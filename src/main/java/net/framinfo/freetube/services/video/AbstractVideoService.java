@@ -14,7 +14,7 @@ public abstract class AbstractVideoService {
     @Inject
     protected SessionDelegate sessionDelegate;
 
-    protected Uni<Video> checkOwnership(String token, String id) {
+    protected Uni<Video> checkOwnership(String token, Long id) {
         AtomicLong channelId = new AtomicLong();
         return sessionDelegate.getChannelFromToken(token)
                 .flatMap(it -> {

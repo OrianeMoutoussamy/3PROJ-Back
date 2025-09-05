@@ -12,7 +12,7 @@ import net.framinfo.freetube.models.playlist.PlaylistVideoId;
 public class UpdatePlaylistService extends AbstractPlaylistService{
 
     public Uni<PlaylistDTO> run(String token, String id, Playlist playlist) {
-        return this.checkOwnership(token, id)
+        return this.checkOwnership(token, Long.parseLong(id))
                 .onItem().ifNotNull().transformToUni(ignored -> { //TODO adapt to payload -> pbly not playlist received in payload but DTO..
                     playlist.setId(Long.parseLong(id));
                     return playlist.persist();
@@ -21,7 +21,7 @@ public class UpdatePlaylistService extends AbstractPlaylistService{
     }
 
     public Uni<Response> addVideo(String token, String id, String videoId) {
-        return this.checkOwnership(token, id)
+        return this.checkOwnership(token, Long.parseLong(id))
                 .onItem().ifNotNull().transformToUni(it -> {
                     PlaylistVideoId playlistVideoId = new PlaylistVideoId(it.getId(), Long.parseLong(videoId));
                     PlaylistVideo playlistVideo = new PlaylistVideo();
@@ -32,7 +32,7 @@ public class UpdatePlaylistService extends AbstractPlaylistService{
     }
 
     public Uni<Response> removeVideo(String token, String id, String videoId) {
-        return this.checkOwnership(token, id)
+        return this.checkOwnership(token, Long.parseLong(id))
                 .onItem().ifNotNull().transformToUni(it -> PlaylistVideo.delete("id = ?1", new PlaylistVideoId(it.getId(), Long.parseLong(videoId))))
                 .onItem().ifNotNull().transform(ignored -> Response.status(200).build());
     }

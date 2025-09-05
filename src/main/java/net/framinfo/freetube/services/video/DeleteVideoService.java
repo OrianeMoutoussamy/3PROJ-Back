@@ -9,8 +9,8 @@ import jakarta.ws.rs.core.Response;
 public class DeleteVideoService extends AbstractVideoService {
 
     public Uni<Response> run(String token, String id) {
-        return this.checkOwnership(token, id)
-                .flatMap(PanacheEntityBase::delete)
+        return this.checkOwnership(token, Long.parseLong(id))
+                .flatMap(it -> Uni.join().all(it.delete(), it.flush()).andCollectFailures())
                 .map(ignored -> Response.status(200).build());
     }
 }

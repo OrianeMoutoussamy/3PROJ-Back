@@ -14,7 +14,7 @@ public abstract class AbstractPlaylistService {
     @Inject
     protected SessionDelegate sessionDelegate;
 
-    protected Uni<Playlist> checkOwnership(String token, String id) {
+    protected Uni<Playlist> checkOwnership(String token, Long id) {
         AtomicLong channelId = new AtomicLong();
         return sessionDelegate.getChannelFromToken(token)
                 .flatMap(it -> {

@@ -27,7 +27,7 @@ public class GetVideoService extends AbstractVideoService {
                 .onItem().ifNull().failWith(ForbiddenException::new)
                 .onItem().ifNotNull().transform(it -> it.getChannelId().equals(channelId.get())
                         ?
-                        new SelfVideoDTO(it, true)
+                        new SelfVideoDTO(it)
                         :
                         new VideoDTO(it, it.getChannel().getSubscribers().stream().anyMatch(ti -> ti.getId().equals(channelId.get())))
                 );

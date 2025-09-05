@@ -11,9 +11,9 @@ import java.io.Serializable;
 @Embeddable
 public class HistoryId implements Serializable {
 
-    @Column(name = "channel_id", insertable=false, updatable=false)
+    @Column(name = "channel_id")
     private Long channelId;
 
-    @Column(name = "video_id", insertable=false, updatable=false)
+    @Column(name = "video_id")
     private Long videoId;
 }

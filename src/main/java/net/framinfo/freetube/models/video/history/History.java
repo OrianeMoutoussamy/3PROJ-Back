@@ -26,12 +26,4 @@ public class History extends PanacheEntityBase implements Serializable {
     @Column(name = "seen_at", nullable = false)
     @CreationTimestamp
     private Instant seenAt;
-
-    @JoinColumn(name = "channel_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Channel channel;
-
-    @JoinColumn(name = "video_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Video video;
 }

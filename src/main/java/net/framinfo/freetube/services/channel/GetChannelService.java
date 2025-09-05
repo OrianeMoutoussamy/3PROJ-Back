@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @ApplicationScoped
-public class GetChannelService extends AbstractChannelService{
+public class GetChannelService extends AbstractChannelService {
 
-    public Uni<SelfChannelDTO> runSelf(String token) { //TODO add history to this and DTO
+    public Uni<SelfChannelDTO> runSelf(String token) {
         return sessionDelegate.getChannelFromToken(token)
                 .map(SelfChannelDTO::new);
     }

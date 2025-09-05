@@ -19,12 +19,4 @@ public class VideoHashtag extends PanacheEntityBase implements Serializable {
 
     @EmbeddedId
     private VideoHashtagId id;
-
-    @JoinColumn(name = "hashtag_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Hashtag hashtag;
-
-    @JoinColumn(name = "video_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Video video;
 }

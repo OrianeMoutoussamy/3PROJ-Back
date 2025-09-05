@@ -14,6 +14,6 @@ public class UpdateVideoService extends AbstractVideoService {
                     video.setId(Long.parseLong(id));
                     return video.persist();
                 })
-                .onItem().ifNotNull().transform(it -> new SelfVideoDTO((Video) it, true));
+                .onItem().ifNotNull().transform(it -> new SelfVideoDTO((Video) it));
     }
 }

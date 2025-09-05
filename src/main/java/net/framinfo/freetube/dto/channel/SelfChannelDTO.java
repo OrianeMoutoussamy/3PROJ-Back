@@ -3,6 +3,7 @@ package net.framinfo.freetube.dto.channel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import net.framinfo.freetube.dto.video.VideoDTO;
 import net.framinfo.freetube.models.channel.Channel;
 
 import java.time.Instant;
@@ -10,15 +11,7 @@ import java.util.List;
 
 @Getter @Setter
 @RequiredArgsConstructor
-public class SelfChannelDTO {
-
-    private Long id;
-
-    private byte[] profilePicture;
-
-    private String username;
-
-    private String description;
+public class SelfChannelDTO extends AbstractChannelDTO {
 
     private Instant createdAt;
 
@@ -28,14 +21,14 @@ public class SelfChannelDTO {
 
     private List<ChannelDTO> subscribers;
 
+    private List<VideoDTO> history;
+
     public SelfChannelDTO(Channel channel) {
-        this.id = channel.getId();
-        this.username = channel.getUsername();
-        this.description = channel.getDescription();
+        super(channel);
         this.createdAt = channel.getCreatedAt();
         this.updatedAt = channel.getUpdatedAt();
-        this.profilePicture = channel.getProfilePicture();
         this.subscriptions = channel.getSubscriptions().stream().map(it -> new ChannelDTO(it, true)).toList();
         this.subscribers = channel.getSubscribers().stream().map(it -> new ChannelDTO(it, this.subscriptions.stream().anyMatch(ti -> ti.getUsername().equals(it.getUsername())))).toList();
+        this.history = channel.getHistory().stream().map(it -> new VideoDTO(it, false)).toList();
     }
 }

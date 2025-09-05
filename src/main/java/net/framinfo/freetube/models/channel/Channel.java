@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import net.framinfo.freetube.models.auth.User;
+import net.framinfo.freetube.models.video.Video;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -32,6 +33,10 @@ public class Channel extends PanacheEntityBase implements Serializable {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "channel_id")
+    private List<Video> videos;
 
     @Lob
     @Column(name = "profile_picture")
@@ -78,4 +83,18 @@ public class Channel extends PanacheEntityBase implements Serializable {
     )
     @OneToMany(fetch = FetchType.EAGER)
     private List<Channel> subscribers;
+
+    @JoinTable(
+            name = "history",
+            joinColumns = @JoinColumn(
+                    name = "channel_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "video_id",
+                    referencedColumnName = "id"
+            )
+    )
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Video> history;
 }

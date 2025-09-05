@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import net.framinfo.freetube.models.channel.Channel;
+import net.framinfo.freetube.models.video.hashtag.Hashtag;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -64,4 +65,32 @@ public class Video extends PanacheEntityBase implements Serializable {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "video_id")
     private List<Reaction> reactions;
+
+    @JoinTable(
+            name = "history",
+            joinColumns = @JoinColumn(
+                    name = "video_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "channel_id",
+                    referencedColumnName = "id"
+            )
+    )
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Channel> views;
+
+    @JoinTable(
+            name = "video_hashtag",
+            joinColumns = @JoinColumn(
+                    name = "video_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "hashtag_id",
+                    referencedColumnName = "id"
+            )
+    )
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Hashtag> hashtags;
 }

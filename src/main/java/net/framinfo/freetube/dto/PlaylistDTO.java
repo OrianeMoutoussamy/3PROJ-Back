@@ -3,8 +3,8 @@ package net.framinfo.freetube.dto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import net.framinfo.freetube.dto.video.VideoDTO;
 import net.framinfo.freetube.models.playlist.Playlist;
-import net.framinfo.freetube.models.video.Video;
 
 import java.time.Instant;
 import java.util.List;
@@ -21,13 +21,13 @@ public class PlaylistDTO {
 
     private Instant updatedAt;
 
-    private List<Video> videos; //TODO change to VideoDTO
+    private List<VideoDTO> videos;
 
     public PlaylistDTO(Playlist playlist) {
         this.id = playlist.getId();
         this.name = playlist.getName();
         this.createdAt = playlist.getCreatedAt();
         this.updatedAt = playlist.getUpdatedAt();
-        this.videos = playlist.getVideos();
+        this.videos = playlist.getVideos().stream().map(it -> new VideoDTO(it, false)).toList();
     }
 }

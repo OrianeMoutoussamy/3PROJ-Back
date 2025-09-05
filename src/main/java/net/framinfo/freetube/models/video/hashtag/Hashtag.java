@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import net.framinfo.freetube.models.video.Video;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Getter @Setter
 @ToString
@@ -23,4 +25,22 @@ public class Hashtag extends PanacheEntityBase implements Serializable {
 
     @Column(length = 32, unique = true)
     private String name;
+
+    @JoinTable(
+            name = "video_hashtag",
+            joinColumns = @JoinColumn(
+                    name = "hashtag_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "video_id",
+                    referencedColumnName = "id"
+            )
+    )
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Video> videos;
+
+    public Hashtag(String name) {
+        this.name = name;
+    }
 }

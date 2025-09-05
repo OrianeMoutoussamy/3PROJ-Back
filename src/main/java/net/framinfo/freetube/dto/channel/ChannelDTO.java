@@ -7,23 +7,12 @@ import net.framinfo.freetube.models.channel.Channel;
 
 @Getter @Setter
 @RequiredArgsConstructor
-public class ChannelDTO {
-
-    private Long id;
-
-    private byte[] profilePicture;
-
-    private String username;
-
-    private String description;
+public class ChannelDTO extends AbstractChannelDTO {
 
     private boolean isSubscribed;
 
     public ChannelDTO(Channel channel, boolean isSubscribed) {
-        this.id = channel.getId();
-        this.username = channel.getUsername();
-        this.description = channel.getDescription();
-        this.profilePicture = channel.getProfilePicture();
+        super(channel);
         this.isSubscribed = isSubscribed;
     }
 }
